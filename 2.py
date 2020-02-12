@@ -21,6 +21,55 @@ class ListNode:
         self.val = x
         self.next = None
 
+
+## 计算数字，相加，生成新的列表
+
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        nums1 = nums2 = 0
+        i = j = 0
+        while l1:
+            nums1 += l1.val * (10 ** i)
+            l1 = l1.next
+            i += 1
         
+        while l2:
+            nums2 += l2.val * (10 ** j)
+            l2 = l2.next
+            j += 1
+        result = nums1 + nums2
+
+        rev = temp = ListNode(0)
+
+        for i in str(result)[::-1]:
+            temp.next = ListNode(int(i))
+            temp = temp.next
+
+        return rev.next
+
+
+## 各位相加，进位生成新的链表
+
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        rev = l3 = ListNode(0)
+        flag = 0
+        while l1 or l2:
+            temp = 0
+            if l1:
+                temp += l1.val
+                l1 = l1.next
+            if l2:
+                temp += l2.val
+                l2 = l2.next
+            temp += flag
+            if temp >= 10:
+                flag = 1
+                temp -= 10
+            else:
+                flag = 0
+            l3.next = ListNode(temp)
+            l3 = l3.next
+        if flag == 1:
+            l3.next = ListNode(1)
+        return rev.next
