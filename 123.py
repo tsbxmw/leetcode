@@ -29,4 +29,20 @@
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        
+        temp = []
+
+        lp = len(prices)
+
+        if lp == 0:
+            return 0
+
+        start = 0
+        minp = prices[0]
+        for i in range(1, lp):
+            if prices[i] > minp:
+                temp.append(prices[i]-minp)
+            else:
+                minp = prices[i]
+        temp.sort(reverse=True)
+        return sum(temp[:2])
+
