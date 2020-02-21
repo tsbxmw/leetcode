@@ -11,6 +11,19 @@
 # 1,1,5 → 1,5,1
 
 
+## key point:
+### 1, 从后往前找递增序列
+### 2，找到后，从后往前搜索比当前值小的值，到 递增序列的前面一个位置
+### 例子
+### 4202320     #从后往前找递增序列 320，
+### 420 2320    #从后往前找比当前值小的值，搜索到递增序列之前的值 2320
+### 420 232 0   #0 < 2, 0 < 3, 0 < 2, 0没有找到，向前遍历
+### 420 23 2 0  #2 < 3, 2==2, 2没有找到，向前遍历
+### 420 2 3 20  #3 > 2, 成立，交换 
+###     | |
+### 420 3 2 20  # 交换后，当前值和后面的值 220，进行排序
+### 420 3 022   # 022
+### 4203022
 class Solution:
     def nextPermutation(self, nums) -> None:
         """
@@ -21,18 +34,21 @@ class Solution:
             return
         flag = False
         flag_temp = False
+        temp = ln-1
         j = ln-1
         while j > 0:
             if nums[j-1]>=nums[j]:
                 j -= 1
-            else:break
-            
-        if j == 1:
-            j = ln-1
+            else:
+                break
 
-        while j > 0:
+        temp = j
+        
+        j = ln-1
+
+        while j > temp-1:
             last = nums[j]
-            for i in range(j-1, -1, -1):
+            for i in range(j-1, temp-2, -1):
                 if nums[i] < last:
                     nums[j] = nums[i]
                     nums[i] = last
@@ -53,11 +69,11 @@ class Solution:
 if __name__ == "__main__":
     s = Solution()
     a=[4,2,0,2,3,2,0]
-    for i in range(50):
+    for i in range(20):
         s.nextPermutation(a)
         print(a)
     a=[1,2,3,4,5,6]
-    for i in range(50):
+    for i in range(20):
         s.nextPermutation(a)
         print(a)
    
