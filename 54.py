@@ -20,6 +20,8 @@
 # ]
 # 输出: [1,2,3,4,8,12,11,10,9,5,6,7]
 
+
+# 按照 left -> down -> right -> up 即可
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         li = len(matrix)
