@@ -23,6 +23,16 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+
+## 整体上是交换，使用递归，先找到最后节点
+## 1 -》 2 -》 3 -》 4 -》 5
+## |                |
+## temp = 1.next == 2
+## 1.next = 4.next == 5
+## 4.next = None
+## 1.next.next == 5.next = 2
+## now = 2
+## last = 3.next
 class Solution:
     def reorderList(self, head: ListNode) -> None:
         """
@@ -33,7 +43,7 @@ class Solution:
         self.pre = head
         self.flag = True
         def test(node):
-            if not node.next:
+            if not node.next:  # 如果 node.next 是 None，就不需要交换了
                 return
             test(node.next)
             if not self.flag:
