@@ -13,10 +13,30 @@
 # 通过次数77,024提交次数104,902
 
 
-# 我觉得是 深度搜索加剪枝
+# 我觉得是 深度搜索
 class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
+    def generateParenthesis(self, n: int):
+        if n == 0:
+            return []
+        if n == 1:
+            return ["()"]
+        self.rev = []
 
-        start = "(" * n + ""
+        def dfs(temp, left_count, right_count):
+            if left_count > right_count:
+                return
+            if left_count > 0:
+                dfs(temp+"(", left_count-1, right_count)
+            if right_count > 0:
+                dfs(temp+")", left_count, right_count-1)
+            if left_count == right_count == 0:
+                self.rev.append(temp)
 
+        dfs("", n, n)
+        return self.rev
+
+
+if __name__ == "__main__":
+    s = Solution()
+    print(s.generateParenthesis(10))
         
