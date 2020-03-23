@@ -18,19 +18,20 @@
 #         self.val = x
 #         self.next = None
 
-## 递归算法
+# 递归算法
 
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         if not head or not head.next:
             return head
-        
+
         p = reverseList(head.next)
         head.next.next = head
         head.next = null
         return p
 
-## 迭代算法
+# 迭代算法
+
 
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
