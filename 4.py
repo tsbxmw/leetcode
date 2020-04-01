@@ -22,7 +22,11 @@
 # 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-## 合并后再计算
+class List(object):
+    pass
+
+# 合并后再计算
+
 
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
@@ -42,10 +46,69 @@ class Solution:
         nums3.extend(nums2[j:])
 
         mid = (l1+l2) // 2
-        if (l1+l2)%2 == 0:
+        if (l1+l2) % 2 == 0:
             return (nums3[mid] + nums3[mid-1])/2
         else:
             return nums3[mid]
 
-            
 
+# 假合并
+class Solution2:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        # 排序
+        l1 = len(nums1)
+        l2 = len(nums2)
+
+        mid = 0
+        if (l1+l2) % 2 == 0:
+            mid = (l1+l2)//2 - 1
+            i = j = 0
+            temp = []
+            while i < l1 and j < l2:
+                if i+j in (mid, mid+1):
+                    temp.append(min(nums1[i], nums2[j]))
+                if i+j > mid+1:
+                    return sum(temp)/2
+                if nums1[i] < nums2[j]:
+                    i += 1
+                else:
+                    j += 1
+            while i < l1:
+                if i+j in (mid, mid+1):
+                    temp.append(nums1[i])
+                if i+j >= mid+1:
+                    return sum(temp)/2
+                i += 1
+            while j < l2:
+                if i+j in (mid, mid+1):
+                    temp.append(nums2[j])
+                if i+j >= mid+1:
+                    return sum(temp)/2
+                j += 1
+        else:
+            mid = (l1+l2)//2
+            i = j = 0
+            while i < l1 and j < l2:
+                if i+j == mid:
+                    return min(nums1[i], nums2[j])
+
+                if nums1[i] < nums2[j]:
+                    i += 1
+                else:
+                    j += 1
+            while i < l1:
+                if i+j == mid:
+                    return nums1[i]
+                i += 1
+            while j < l2:
+                if i+j == mid:
+                    return nums2[j]
+                j += 1
+
+
+# log(m+n), 第 k 小数
+
+class Solution3:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        l1 = len(nums1)
+        l2 = len(nums2)
