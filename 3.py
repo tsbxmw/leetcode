@@ -3,7 +3,7 @@
 # 示例 1:
 
 # 输入: "abcabcbb"
-# 输出: 3 
+# 输出: 3
 # 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
 # 示例 2:
 
@@ -22,7 +22,8 @@
 # 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-## 遍历，如果出现了已经存在的字符，当前串保存，重新生成新的串，向下遍历
+# 遍历，如果出现了已经存在的字符，当前串保存，重新生成新的串，向下遍历
+# 滑动窗口？
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
@@ -35,5 +36,4 @@ class Solution:
                 rev = max(rev, len(temp))
                 temp = temp[temp.index(i)+1:] + i
         return max(rev, len(temp))
-
 
