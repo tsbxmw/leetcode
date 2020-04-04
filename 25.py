@@ -23,13 +23,13 @@
 
 
 # Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 
-## 先取值再重新生成新的 ListNode
+# 先取值再重新生成新的 ListNode
 
 class Solution:
     def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
@@ -42,14 +42,47 @@ class Solution:
         rev = l = ListNode(0)
         tt = []
         i = 0
-        while i+k <= lt: ## 这里判断 i+k <= lt 才可以翻转
-            tt.extend(temp[i:i+k][::-1])   
+        while i+k <= lt:  # 这里判断 i+k <= lt 才可以翻转
+            tt.extend(temp[i:i+k][::-1])
             i += k
-        if lt > len(tt):  ##这里判断 如果没遍历完，把后面的加进去
+        if lt > len(tt):  # 这里判断 如果没遍历完，把后面的加进去
             tt.extend(temp[i:])
         for x in tt:
             l.next = ListNode(x)
-            
+
             l = l.next
         return rev.next
 
+
+# 母鸡啊
+class Solution:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+
+        def reverse2node(node):
+            pre = None
+            while node:
+                nex = node.next
+                node.next = pre
+                pre = node
+                node = nex
+            return pre
+
+        if not head:
+            return None
+        trev = rev = ListNode(0)
+        begin = tail = head
+        while True:
+            n = k-1
+            while tail and n:
+                tail = tail.next
+                n -= 1
+            if n > 0 or not tail:
+                rev.next = head
+                break
+            temp = tail.next
+            tail.next = None
+            rev.next = reverse2node(head)
+            rev = head
+            head = temp
+            tail = temp
+        return trev.next
