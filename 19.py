@@ -20,11 +20,12 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
         if n == 0:
             return head
-        temp = [ListNode(0)]   
+        temp = [ListNode(0)]
         pre = temp[0]
         pre.next = head
         while head:
@@ -32,8 +33,31 @@ class Solution:
             head = head.next
         temp.append(None)
         ln = len(temp)
-        if ln==2:
+        if ln == 2:
             return None
-            
+
         temp[ln-n-2].next = temp[ln-n]
         return pre.next
+
+# 双指针
+
+
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        if not head:
+            return None
+        dummy = ListNode(0)
+        dummy.next = head
+        temp = []
+        # 双指针
+        pre = tail = dummy
+
+        while tail and n >= 0:
+            tail = tail.next
+            n -= 1
+
+        while pre and tail:
+            pre = pre.next
+            tail = tail.next
+        pre.next = pre.next.next
+        return dummy.next
